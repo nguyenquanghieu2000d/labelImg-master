@@ -12,7 +12,7 @@ except ImportError:
 from libs.utils import distance
 import sys
 
-DEFAULT_LINE_COLOR = QColor(0, 255, 0, 128)
+DEFAULT_LINE_COLOR = QColor(255, 0, 0)
 DEFAULT_FILL_COLOR = QColor(255, 0, 0, 128)
 DEFAULT_SELECT_LINE_COLOR = QColor(255, 255, 255)
 DEFAULT_SELECT_FILL_COLOR = QColor(0, 128, 255, 155)
@@ -52,14 +52,14 @@ class Shape(object):
             self.NEAR_VERTEX: (4, self.P_ROUND),
             self.MOVE_VERTEX: (1.5, self.P_SQUARE),
         }
-
+	
         self._closed = False
-
-        if line_color is not None:
+	
+        #if line_color is not None:
             # Override the class line_color attribute
             # with an object attribute. Currently this
             # is used for drawing the pending line a different color.
-            self.line_color = line_color
+        self.line_color = DEFAULT_LINE_COLOR
 
     def close(self):
         self._closed = True
@@ -86,7 +86,7 @@ class Shape(object):
 
     def paint(self, painter):
         if self.points:
-            color = self.select_line_color if self.selected else self.line_color
+            color = DEFAULT_LINE_COLOR #self.select_line_color if self.selected else self.line_color
             pen = QPen(color)
             # Try using integer sizes for smoother drawing(?)
             pen.setWidth(max(1, int(round(2.0 / self.scale))))
@@ -188,8 +188,8 @@ class Shape(object):
         shape.fill = self.fill
         shape.selected = self.selected
         shape._closed = self._closed
-        if self.line_color != Shape.line_color:
-            shape.line_color = self.line_color
+        #if self.line_color != Shape.line_color:
+        #    shape.line_color = self.line_color
         if self.fill_color != Shape.fill_color:
             shape.fill_color = self.fill_color
         shape.difficult = self.difficult
